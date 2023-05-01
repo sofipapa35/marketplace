@@ -30,7 +30,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user -> setEmail('admin@admin.com');
         $password = $this->encoder->hashPassword($user, "soleilsoleil");
         $user->setPassword($password);
-        $user -> isVerified(false);
+        $user -> isVerified(true);
+        $user -> setSex('m');
         $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
         $user -> setTelephone('00330711111111');
         $manager->persist($user);
@@ -42,12 +43,18 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user -> setEmail('sofi@test.com');
         $password = $this->encoder->hashPassword($user, "soleilsoleil");
         $user->setPassword($password);
-        $user -> isVerified(false);
+        $user -> isVerified(true);
         $user->setRoles(['ROLE_USER']);
         $user -> setTelephone('00330711111111');
+        $user -> setSex('f');
         $manager->persist($user);
         $user->addAdresse($this->getReference(AdresseFixtures::AD2));
         $user->addAdresse($this->getReference(AdresseFixtures::AD3));
+        $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_PANT2));
+        $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_IRON));
+        $user->addFavori($this->getReference(ZAnnonceFixtures::ANN_BEAUTY));
+        $user->addFavori($this->getReference(ZAnnonceFixtures::ANN_PANT1));
+        $user->addFavori($this->getReference(ZAnnonceFixtures::ANN_HAT));
 
         $user = new User();
         $user -> setNom('test');
@@ -55,11 +62,29 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user -> setEmail('jean@test.com');
         $password = $this->encoder->hashPassword($user, "soleilsoleil");
         $user->setPassword($password);
-        $user -> isVerified(false);
+        $user -> isVerified(true);
         $user->setRoles(['ROLE_USER']);
         $user -> setPseudo('J');
+        $user -> setSex('m');
         $manager->persist($user);
         $user->addAdresse($this->getReference(AdresseFixtures::AD4));
+        $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_PANT3));
+        $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_BLENDER));
+        $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_PARF1));
+
+        $user = new User();
+        $user -> setNom('test');
+        $user -> setPrenom('mika');
+        $user -> setEmail('mika@test.com');
+        $password = $this->encoder->hashPassword($user, "soleilsoleil");
+        $user->setPassword($password);
+        $user -> isVerified(true);
+        $user->setRoles(['ROLE_USER']);
+        $user -> setSex('m');
+        $manager->persist($user);
+        $user->addAdresse($this->getReference(AdresseFixtures::AD4));
+        $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_BEAUTY));
+        $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_PARF2));
 
         $manager->flush();
     }

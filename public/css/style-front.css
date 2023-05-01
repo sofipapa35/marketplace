@@ -1,0 +1,13 @@
+.container-fluid{
+    background-color: #51087E;
+    color: white;
+}
+.container-fluid a{
+    color: white;
+}
+.dropdown-menu{
+    background-color: #6C0BA9;
+}
+.dropdown-menu li a{
+    color: white;
+}

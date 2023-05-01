@@ -13,6 +13,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
     // ====================================================== //
     // ===================== PROPRIETES ===================== //
     // ====================================================== //
+    public const ANN_PANT1 = "pantalon1";
     public const ANN_PANT2 = "pantalon2";
     public const ANN_PANT3 = "pantalon3";
     public const ANN_BLENDER = "blender";
@@ -31,9 +32,11 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $ann -> setPrix(20);
         $ann -> setIsValid(true);
         $ann -> setIsActive(true);
+        $ann -> setSexe('m');
         $ann -> setUpdatedAt(new DateTimeImmutable);
         $ann -> setCreatedAt(new DateTimeImmutable("2023-04-18"));
         $manager->persist($ann);
+        $this->addReference(self::ANN_PANT1, $ann);
         $ann->setCategorie($this->getReference(CategorieFixtures::CAT_MODE));
 
         $ann = new Annonce();
@@ -43,6 +46,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $ann -> setPrix(15.90);
         $ann -> setIsValid(true);
         $ann -> setIsActive(true);
+        $ann -> setSexe('m');
         $ann -> setUpdatedAt(new DateTimeImmutable);
         $ann -> setCreatedAt(new DateTimeImmutable("2023-04-19"));
         $manager->persist($ann);
@@ -55,6 +59,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $ann -> setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin facilisis nisl sit amet nulla mattis vestibulum. Fusce consectetur dignissim dolor. Morbi condimentum, ante nec venenatis dignissim, ante urna aliquet orci, vel varius augue dolor eu nisl. Sed nec porttitor augue, id blandit elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae');
         $ann -> setPrix(14.50);
         $ann -> setIsValid(true);
+        $ann -> setSexe('m');
         $ann -> setIsActive(true);
         $ann -> setUpdatedAt(new DateTimeImmutable);
         $ann -> setCreatedAt(new DateTimeImmutable("2023-04-18"));
@@ -95,6 +100,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $ann -> setPrix(10);
         $ann -> setIsValid(true);
         $ann -> setIsActive(true);
+        $ann -> setSexe('f');
         $ann -> setUpdatedAt(new DateTimeImmutable);
         $ann -> setCreatedAt(new DateTimeImmutable("2023-04-17"));
         $manager->persist($ann);
@@ -121,6 +127,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $ann -> setPrix(17.50);
         $ann -> setIsValid(true);
         $ann -> setIsActive(true);
+        $ann -> setSexe('f');
         $ann -> setUpdatedAt(new DateTimeImmutable);
         $ann -> setCreatedAt(new DateTimeImmutable("2023-04-20"));
         $manager->persist($ann);
@@ -134,6 +141,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $ann -> setPrix(16);
         $ann -> setIsValid(true);
         $ann -> setIsActive(true);
+        $ann -> setSexe('f');
         $ann -> setUpdatedAt(new DateTimeImmutable);
         $ann -> setCreatedAt(new DateTimeImmutable("2023-04-18"));
         $manager->persist($ann);

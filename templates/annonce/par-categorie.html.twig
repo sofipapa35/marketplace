@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AnnonceController!
+{% endblock %}
+
+{% block body %}
+	<pre>
+    {{ dump(categories) }}
+</pre>
+
+	{% for cat in categories %}
+		<div>
+			<div>
+                {{cat.titre}}
+            </div>
+		</div>
+	{% endfor %}
+
+{% endblock %}

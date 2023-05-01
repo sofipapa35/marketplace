@@ -84,11 +84,28 @@ class Annonce
      */
     private $categorie;
 
+    /**
+     * @ORM\Column(type="string", length=1, nullable=true)
+     */
+    private $sexe;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Relative::class, mappedBy="cle1")
+     */
+    private $relatives1;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Relative::class, mappedBy="cle2")
+     */
+    private $relatives2;
+
     public function __construct()
     {
         $this->postes = new ArrayCollection();
         $this->favori = new ArrayCollection();
         $this->image = new ArrayCollection();
+        $this->relatives1 = new ArrayCollection();
+        $this->relatives2 = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -296,6 +313,78 @@ class Annonce
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getSexe(): ?string
+    {
+        return $this->sexe;
+    }
+
+    public function setSexe(?string $sexe): self
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Relative>
+     */
+    public function getRelatives1(): Collection
+    {
+        return $this->relatives1;
+    }
+
+    public function addRelatives1(Relative $relatives1): self
+    {
+        if (!$this->relatives1->contains($relatives1)) {
+            $this->relatives1[] = $relatives1;
+            $relatives1->setCle1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRelatives1(Relative $relatives1): self
+    {
+        if ($this->relatives1->removeElement($relatives1)) {
+            // set the owning side to null (unless already changed)
+            if ($relatives1->getCle1() === $this) {
+                $relatives1->setCle1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Relative>
+     */
+    public function getRelatives2(): Collection
+    {
+        return $this->relatives2;
+    }
+
+    public function addRelatives2(Relative $relatives2): self
+    {
+        if (!$this->relatives2->contains($relatives2)) {
+            $this->relatives2[] = $relatives2;
+            $relatives2->setCle2($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRelatives2(Relative $relatives2): self
+    {
+        if ($this->relatives2->removeElement($relatives2)) {
+            // set the owning side to null (unless already changed)
+            if ($relatives2->getCle2() === $this) {
+                $relatives2->setCle2(null);
+            }
+        }
 
         return $this;
     }
