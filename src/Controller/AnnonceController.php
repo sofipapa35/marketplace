@@ -3,21 +3,24 @@
 namespace App\Controller;
 
 use App\Repository\CategorieRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\SousCategorieRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AnnonceController extends AbstractController
 {
     /**
-     * @Route("/annonce", name="annonce")
+     * @Route("/annonce/{titre}", name="annonce")
      */
-    public function index(CategorieRepository $categorieRepository): Response
+    public function index(Request $request, SousCategorieRepository $sousCategorieRepository): Response
     {
-        $cat = $categorieRepository -> findAll();
-
+        dd($request->getUri());
+        $sous = $sousCategorieRepository->findByTitle($title);
+dd($sous);
         return $this->render('annonce/par-categorie.html.twig', [
-            'categories' => $cat,
+            'categories' => $sous,
         ]);
     }
 }
