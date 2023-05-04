@@ -85,6 +85,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user->addAdresse($this->getReference(AdresseFixtures::AD4));
         $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_BEAUTY));
         $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_PARF2));
+        $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_PANT1));
 
         $manager->flush();
     }

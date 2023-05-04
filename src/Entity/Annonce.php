@@ -99,6 +99,11 @@ class Annonce
      */
     private $relatives2;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=SousCategorie::class, inversedBy="annonces")
+     */
+    private $sousCategorie;
+
     public function __construct()
     {
         $this->postes = new ArrayCollection();
@@ -385,6 +390,18 @@ class Annonce
                 $relatives2->setCle2(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSousCategorie(): ?SousCategorie
+    {
+        return $this->sousCategorie;
+    }
+
+    public function setSousCategorie(?SousCategorie $sousCategorie): self
+    {
+        $this->sousCategorie = $sousCategorie;
 
         return $this;
     }

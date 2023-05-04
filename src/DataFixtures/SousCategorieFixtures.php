@@ -23,22 +23,32 @@ class SousCategorieFixtures extends Fixture
         $sous -> setTitre('Vetments');
         $manager->persist($sous);
         $this->addReference(self::SOUS_1, $sous);
+        $sous->setCategorie($this->getReference(CategorieFixtures::CAT_MODE));
 
         $sous = new SousCategorie();
         $sous -> setTitre('accessoire');
         $manager->persist($sous);
         $this->addReference(self::SOUS_2, $sous);
+        $sous->setCategorie($this->getReference(CategorieFixtures::CAT_MODE));
 
         $sous = new SousCategorie();
         $sous -> setTitre('parfums');
         $manager->persist($sous);
         $this->addReference(self::SOUS_3, $sous);
+        $sous->setCategorie($this->getReference(CategorieFixtures::CAT_BEAUTY));
 
         $sous = new SousCategorie();
         $sous -> setTitre('Beauté');
         $manager->persist($sous);
         $this->addReference(self::SOUS_4, $sous);
+        $sous->setCategorie($this->getReference(CategorieFixtures::CAT_BEAUTY));
 
         $manager->flush();
     }
+    // public function getDependencies()
+    // {
+    //     return [
+    //         ZAnnonceFixtures::class,
+    //     ];
+    // }
 }

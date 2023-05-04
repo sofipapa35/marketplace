@@ -9,14 +9,14 @@ use App\DataFixtures\SousCategorieFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class CategorieFixtures extends Fixture implements DependentFixtureInterface
+class CategorieFixtures extends Fixture
 {  
     // ====================================================== //
     // ===================== PROPRIETES ===================== //
     // ====================================================== //
-    public const CAT_MODE = "pantalon";
+    public const CAT_MODE = "mode";
     public const CAT_BEAUTY = "cat-beauty";
-    public const CAT_ELECTRO = "elactro";
+    public const CAT_ELECTRO = "electro";
 
     public function load(ObjectManager $manager): void
     {
@@ -26,8 +26,6 @@ class CategorieFixtures extends Fixture implements DependentFixtureInterface
         $cat -> setUpdatedAt(new DateTimeImmutable);
         $manager->persist($cat);
         $this->addReference(self::CAT_MODE, $cat);
-        $cat->addSousCategory($this->getReference(SousCategorieFixtures::SOUS_1));
-        $cat->addSousCategory($this->getReference(SousCategorieFixtures::SOUS_2));
 
         $cat = new Categorie();
         $cat -> setTitre('beauty');
@@ -35,8 +33,6 @@ class CategorieFixtures extends Fixture implements DependentFixtureInterface
         $cat -> setUpdatedAt(new DateTimeImmutable);
         $manager->persist($cat);
         $this->addReference(self::CAT_BEAUTY, $cat);
-        $cat->addSousCategory($this->getReference(SousCategorieFixtures::SOUS_3));
-        $cat->addSousCategory($this->getReference(SousCategorieFixtures::SOUS_4));
 
         $cat = new Categorie();
         $cat -> setTitre('electromenager');
@@ -46,11 +42,5 @@ class CategorieFixtures extends Fixture implements DependentFixtureInterface
         $this->addReference(self::CAT_ELECTRO, $cat);
 
         $manager->flush();
-    }
-    public function getDependencies()
-    {
-        return [
-            SousCategorieFixtures::class,
-        ];
     }
 }

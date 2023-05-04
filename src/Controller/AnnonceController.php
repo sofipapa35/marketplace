@@ -16,11 +16,11 @@ class AnnonceController extends AbstractController
      */
     public function index(Request $request, SousCategorieRepository $sousCategorieRepository): Response
     {
-        dd($request->getUri());
-        $sous = $sousCategorieRepository->findByTitle($title);
-dd($sous);
-        return $this->render('annonce/par-categorie.html.twig', [
-            'categories' => $sous,
+        $url = explode('/', $request->getUri());
+        $sous = $url[count($url) - 1 ];
+        $sous = $sousCategorieRepository->findByTitre($sous);
+        return $this->render('annonce/par-sousCategorie.html.twig', [
+            'sousCategorie' => $sous,
         ]);
     }
 }

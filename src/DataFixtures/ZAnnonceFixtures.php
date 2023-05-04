@@ -4,7 +4,9 @@ namespace App\DataFixtures;
 
 use DateTimeImmutable;
 use App\Entity\Annonce;
+use App\DataFixtures\CategorieFixtures;
 use Doctrine\Persistence\ObjectManager;
+use App\DataFixtures\SousCategorieFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
@@ -38,6 +40,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($ann);
         $this->addReference(self::ANN_PANT1, $ann);
         $ann->setCategorie($this->getReference(CategorieFixtures::CAT_MODE));
+        $ann->setSousCategorie($this->getReference(SousCategorieFixtures::SOUS_1));
 
         $ann = new Annonce();
         $ann -> setTitre('Pantalon bleu');
@@ -52,6 +55,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($ann);
         $this->addReference(self::ANN_PANT2, $ann);
         $ann->setCategorie($this->getReference(CategorieFixtures::CAT_MODE));
+        $ann->setSousCategorie($this->getReference(SousCategorieFixtures::SOUS_1));
 
         $ann = new Annonce();
         $ann -> setTitre('Pantalon orange');
@@ -66,6 +70,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($ann);
         $this->addReference(self::ANN_PANT3, $ann);
         $ann->setCategorie($this->getReference(CategorieFixtures::CAT_MODE));
+        $ann->setSousCategorie($this->getReference(SousCategorieFixtures::SOUS_1));
 
         $ann = new Annonce();
         $ann -> setTitre('Blender');
@@ -92,6 +97,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($ann);
         $this->addReference(self::ANN_BEAUTY, $ann);
         $ann->setCategorie($this->getReference(CategorieFixtures::CAT_BEAUTY));
+        $ann->setSousCategorie($this->getReference(SousCategorieFixtures::SOUS_4));
 
         $ann = new Annonce();
         $ann -> setTitre('chapeau');
@@ -106,6 +112,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($ann);
         $this->addReference(self::ANN_HAT, $ann);
         $ann->setCategorie($this->getReference(CategorieFixtures::CAT_MODE));
+        $ann->setSousCategorie($this->getReference(SousCategorieFixtures::SOUS_2));
 
         $ann = new Annonce();
         $ann -> setTitre('Iron');
@@ -133,6 +140,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($ann);
         $this->addReference(self::ANN_PARF1, $ann);
         $ann->setCategorie($this->getReference(CategorieFixtures::CAT_BEAUTY));
+        $ann->setSousCategorie($this->getReference(SousCategorieFixtures::SOUS_3));
 
         $ann = new Annonce();
         $ann -> setTitre('parfum femme');
@@ -147,6 +155,7 @@ class ZAnnonceFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($ann);
         $this->addReference(self::ANN_PARF2, $ann);
         $ann->setCategorie($this->getReference(CategorieFixtures::CAT_BEAUTY));
+        $ann->setSousCategorie($this->getReference(SousCategorieFixtures::SOUS_3));
 
         $manager->flush();
     }
