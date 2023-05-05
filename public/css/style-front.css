@@ -7,6 +7,8 @@ body {
   }
 
   .dropd-ul {
+    background-color: white;
+    padding-right: 25px;
     position: absolute;
     /* left: 0px; */
     top: 55px;
@@ -35,6 +37,13 @@ body {
     .flex{
       display: flex;
       flex-wrap: wrap;
+    }
+
+    .icon{
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      z-index: 5;
     }
 
   @media only screen and (max-width: 991.33px) {

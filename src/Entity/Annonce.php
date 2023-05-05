@@ -112,6 +112,10 @@ class Annonce
         $this->relatives1 = new ArrayCollection();
         $this->relatives2 = new ArrayCollection();
     }
+    public function __toString()
+    {
+        return $this->titre;
+    }
 
     public function getId(): ?int
     {

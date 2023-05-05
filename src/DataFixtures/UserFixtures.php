@@ -71,6 +71,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_PANT3));
         $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_BLENDER));
         $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_PARF1));
+        $user->addAnnonce($this->getReference(ZAnnonceFixtures::ANN_HAT));
 
         $user = new User();
         $user -> setNom('test');

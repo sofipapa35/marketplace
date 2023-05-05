@@ -14,18 +14,27 @@ class RelativeFixtures extends Fixture implements DependentFixtureInterface
     {
         $r = new Relative();
         $r->setCle1($this->getReference(ZAnnonceFixtures::ANN_PANT1));;
+        $r->setCle2($this->getReference(ZAnnonceFixtures::ANN_PANT2));;
+        $manager->persist($r);
+
+        $r = new Relative();
+        $r->setCle1($this->getReference(ZAnnonceFixtures::ANN_PANT1));;
+        $r->setCle2($this->getReference(ZAnnonceFixtures::ANN_PANT3));;
+        $manager->persist($r);
+
+        $r = new Relative();
         $r->setCle1($this->getReference(ZAnnonceFixtures::ANN_PANT2));;
-        $r->setCle1($this->getReference(ZAnnonceFixtures::ANN_PANT3));;
+        $r->setCle2($this->getReference(ZAnnonceFixtures::ANN_PANT3));;
         $manager->persist($r);
 
         $r = new Relative();
         $r->setCle1($this->getReference(ZAnnonceFixtures::ANN_PARF1));;
-        $r->setCle1($this->getReference(ZAnnonceFixtures::ANN_PARF2));;
+        $r->setCle2($this->getReference(ZAnnonceFixtures::ANN_PARF2));;
         $manager->persist($r);
 
         $r = new Relative();
         $r->setCle1($this->getReference(ZAnnonceFixtures::ANN_IRON));;
-        $r->setCle1($this->getReference(ZAnnonceFixtures::ANN_BLENDER));;
+        $r->setCle2($this->getReference(ZAnnonceFixtures::ANN_BLENDER));;
         $manager->persist($r);
 
         $manager->flush();

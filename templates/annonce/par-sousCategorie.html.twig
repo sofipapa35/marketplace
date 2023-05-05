@@ -5,18 +5,20 @@
 
 {% block body %}
 	<div class="flex">
-			{% for sous in sousCategorie %}
-				{% for ann in sous.annonces %}
-		<div class="col-md-3 p-1">
+		{% for sous in sousCategorie %}
+			{% for ann in sous.annonces %}
+				<div class="col-md-3 p-1">
 					<div class="card">
+						<i class="fa fa-heart text-end icon"></i>
 						<img src="{{asset('/img/image/' ~ ann.imageName)}}" class="card-img-top" alt="{{ann.titre}}">
 						<div class="card-body">
-							<h5 class="card-title">{{ann.titre}}</h5>
-							<a href="#" class="btn btn-primary">Go somewhere</a>
+							<h5 class="card-title">{{ann.titre|capitalize}}</h5>
+							<a href="{{path('annonce-detail', {id: ann.id})}}" class="btn btn-dark w-100 my-2">Details</a>
+							<a href="#" class="btn btn-secondary w-100">Ajouter au panier</a>
 						</div>
 					</div>
-		</div>
-				{% endfor %}
+				</div>
 			{% endfor %}
+		{% endfor %}
 	</div>
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\AnnonceRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\SousCategorieRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,5 +23,16 @@ class AnnonceController extends AbstractController
         return $this->render('annonce/par-sousCategorie.html.twig', [
             'sousCategorie' => $sous,
         ]);
-    }
+    }    
+    /**
+    * @Route("/annonce/details/{id}", name="annonce-detail")
+    */
+   public function annonceDetais(AnnonceRepository $annonceRepository, int $id): Response
+   {
+    $ann = $annonceRepository -> findOneBy(['id' => $id]);
+
+       return $this->render('annonce/details.html.twig', [
+           'annonce' => $ann,
+       ]);
+   }
 }
