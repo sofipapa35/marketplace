@@ -63,4 +63,42 @@ class AnnonceRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+//    public function getRelatives1($annId): ?Annonce
+//    {
+//         return $this->createQueryBuilder('a')
+//         ->join('a.relatives1', 'r1')
+//         ->andWhere('r1.cle1 = :val1')
+//            ->setParameter('val1', $annId)
+//            ->getQuery()
+//            ->getOneOrNullResult()
+//        ;
+//    }   
+//    public function getRelatives2($annId): ?Annonce
+//    {
+//         return $this->createQueryBuilder('a')
+//         ->join('a.relatives2', 'r2')
+//         ->orWhere('r2.cle2 = :val2')
+//            ->setParameter('val2', $annId)
+//            ->getQuery()
+//            ->getOneOrNullResult()
+//        ;
+//    }
+   
+//  public function getArticlesHome($category_id, $locale): array
+//  {
+//      return $this->createQueryBuilder('a')
+//             ->join('a.article', 'ar')
+//             ->join('ar.category', 'c')
+//          ->andWhere('c.id = :val2')
+//          ->andWhere('ar.active = :val3')
+//          ->andWhere('a.lang = :val4')
+//          ->setParameter('val2', $category_id)
+//          ->setParameter('val3', true)
+//          ->setParameter('val4', $locale)
+//       //    ->orderBy('a.id', 'ASC')
+//       //    ->setMaxResults(10)
+//          ->getQuery()
+//          ->getResult()
+//      ;
+//  }
 }

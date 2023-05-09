@@ -4,51 +4,56 @@
 {% endblock %}
 
 {% block body %}
-<pre>
-    {{ dump(annonce) }}
-</pre>
+	<div class="d-md-flex">
+		<div class="col-md-4">
+			<img src="{{asset('/img/image/' ~ annonce.imageName)}}" alt="{{annonce.titre}}" class="img-fluid">
+		</div>
+		<div>
+			<h3>
+				<b>{{annonce.titre|capitalize}}</b>
+			</h3>
+			<div class="text-end text-secondary">
+				<small>Créé le
+					{{annonce.createdAt|date('d-m-Y')}}</small><br>
+				{% if annonce.updatedAt %}
+					<small>Mis à jour le
+						{{annonce.updatedAt|date('d-m-Y')}}</small><br>
+				{% endif %}
+				{% if annonce.user.pseudo %}
+					<small>Publiée par
+						{{annonce.user.pseudo}}</small>
+				{% else %}
+					<small>Publiée par
+						{{annonce.user.prenom}}</small>
+				{% endif %}
+			</div>
+			<div>
+				<div class="py-3">{{annonce.prix|number_format(2)}}
+					€</div>
+				<hr>
+				<h5 class="py-3">
+					<b>Desctiption</b>
+				</h5>
+				<div>
+					{{annonce.description|capitalize|raw}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
 
-<div class="d-md-flex">
-    <div class="col-md-4">
-        <img src="{{asset('/img/image/' ~ annonce.imageName)}}" alt="{{annonce.titre}}" class="img-fluid">
-    </div>
-    <div>
-        <h3><b>{{annonce.titre|capitalize}}</b></h3>
-        <div class="text-end text-secondary">
-        <small>Créé le {{annonce.createdAt|date('d-m-Y')}}</small><br>
-        {% if annonce.updatedAt %}
-            <small>Mis à jour le {{annonce.updatedAt|date('d-m-Y')}}</small><br>
-        {% endif %} 
-        {% if annonce.user.pseudo %}
-            <small>Publiée par {{annonce.user.pseudo}}</small>
-        {% else %}
-            <small>Publiée par {{annonce.user.prenom}}</small>                   
-        {% endif %}
-        </div>
-        <div>
-            <div class="py-3">{{annonce.prix|number_format(2)}} €</div>
-            <hr>
-            <h5 class="py-3"><b>Desctiption</b></h5>
-            <div>
-                {{annonce.description|capitalize|raw}}
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    <h4>Vous pouvez aimez aussi</h4>
-    {% for rel in annonce.relatives1 %}111111111
-    <pre>
-        {{ dump(rel.cle2) }}
-    </pre>
-        {{rel.cle1}} <br>
-    {% endfor %}
-    {% for rel in annonce.relatives2 %}22222222
-        <pre>
-        {{ dump(rel.cle2) }}
-    </pre>
-        {{rel.cle2}} <br>
-    {% endfor %}
-        
-</div>
+		{% if relatives|length > 0 %}
+			<div class="my-5">
+				<h4>Vous pouvez aimez aussi</h4>
+				<div class="d-flex flex-wrap">
+					{% for r in relatives %}
+						<a href="{{path('annonce-detail', {id: r.id})}}" class="col-6 col-md-2 p-1 card img">
+							<img src="{{asset('/img/image/' ~ r.imageName)}}" alt="{{r.titre}}" class="img-fluid">
+						</a>
+					{% endfor %}
+				</div>
+			</div>
+		{% endif %}
+
+	</div>
 {% endblock %}
