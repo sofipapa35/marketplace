@@ -37,6 +37,11 @@ class Adresse
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $principale;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Adresse
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function isPrincipale(): ?bool
+    {
+        return $this->principale;
+    }
+
+    public function setPrincipale(?bool $principale): self
+    {
+        $this->principale = $principale;
 
         return $this;
     }

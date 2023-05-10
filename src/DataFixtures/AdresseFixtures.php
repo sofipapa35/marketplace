@@ -26,6 +26,7 @@ class AdresseFixtures extends Fixture
     $adresse -> setAdresse('1 rue de soleil');
     $adresse -> setZip('77777');
     $adresse -> setVille('Paris');
+    $adresse -> setPrincipale(true);
     $manager->persist($adresse);
     $this->addReference(self::AD1, $adresse);
 
@@ -34,6 +35,7 @@ class AdresseFixtures extends Fixture
     $adresse -> setAdresse('17 rue de soleil');
     $adresse -> setZip('222211');
     $adresse -> setVille('Lyon');
+    $adresse -> setPrincipale(true);
     $manager->persist($adresse);
     $this->addReference(self::AD2, $adresse);
     
@@ -41,6 +43,7 @@ class AdresseFixtures extends Fixture
     $adresse -> setAdresse('20 rue de soleil');
     $adresse -> setZip('45223');
     $adresse -> setVille('Paris');
+    $adresse -> setPrincipale(false);
     $manager->persist($adresse);
     $this->addReference(self::AD3, $adresse);
     
@@ -48,6 +51,7 @@ class AdresseFixtures extends Fixture
     $adresse -> setAdresse('2 rue de soleil');
     $adresse -> setZip('77711');
     $adresse -> setVille('Paris');
+    $adresse -> setPrincipale(true);
     $manager->persist($adresse);
     $this->addReference(self::AD4, $adresse);
 
