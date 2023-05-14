@@ -54,6 +54,7 @@
 									<th scope="col">Titre</th>
 									<th scope="col">Créé le</th>
 									<th scope="col">Prix</th>
+									<th scope="col">Activée</th>
 									<th scope="col"></th>
 								</tr>
 							</thead>
@@ -63,8 +64,14 @@
 									<td class='col-md-2'><img src="{{asset('/img/image/' ~ ann.imageName)}}" alt="{{ann.titre}}" class="img-fluid"></td>
 									<td>{{ann.titre}}</td>
 									<td>{{ann.createdAt|date('d-m-Y')}}</td>
-									<td>{{ann.prix|number_format(2)}} €
-										€</td>
+									<td>{{ann.prix|number_format(2)}}€
+									</td>
+									<td>
+										<label class="switch">
+											<input type="checkbox" {{ann.isActive ? 'checked' : ''}} class="checkboxIsActive" value='{{ann.id}}'>
+											<span class="slider round"></span>
+										</label>
+									</td>
 									<td>
 										<a href="{{ path('profile-annonce-detail', {'id': ann.id}) }}" class="btn btn-success">
 											<i class="fa-solid fa-eye"></i>

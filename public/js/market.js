@@ -1,14 +1,13 @@
 $(document).ready(function(){
-    $('.dropd-ul').hide();
-    $(".nav-button").on("click", function(){
-            $(this).find('ul').slideToggle(400); 
-            $('.nav-button ul').not($(this).find('ul')).hide();
-});
+//     $('.dropd-ul').hide();
+//     $(".nav-button").on("click", function(){
+//             $(this).find('ul').slideToggle(400); 
+//             $('.nav-button ul').not($(this).find('ul')).hide();
+// });
 
 $("#annonce_categorie").on("change", function () {
     var cat = $(this).val();
     
-console.log($("#annonce_categorie").val());
     $.ajax({
         url: 'getSousCategorie',
         type: 'POST',
@@ -19,8 +18,32 @@ console.log($("#annonce_categorie").val());
         $("#sous").html(response);
     })
 });
-$("#sous").on("change", function () {
-console.log($("#sous").val());
+
+// isActive ------------
+
+$('.checkboxIsActive').click(function(){
+    if($(this).prop("checked") == true){
+        var id = $(this).val();
+        console.log(id);
+        $.ajax({
+            url: 'setIsActive',
+            type: 'POST',
+            data: {
+                'id' : id
+            }
+        })
+    }
+    else if($(this).prop("checked") == false){
+        var id = $(this).val();
+        console.log(id);
+        $.ajax({
+            url: 'unSetIsActive',
+            type: 'POST',
+            data: {
+                'id' : id
+            }
+        })
+    }
 });
 
 });

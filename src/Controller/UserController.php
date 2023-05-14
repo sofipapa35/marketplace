@@ -31,63 +31,89 @@ class UserController extends AbstractController
      */
     public function annonceDetail(AnnonceRepository $annonceRepository, $id): Response
     {
-        $ann = $annonceRepository -> findOneById($id);
+        $ann = $annonceRepository->findOneById($id);
         return $this->render('user/profil-ann-detail.html.twig', [
             'ann' => $ann,
         ]);
-    } 
-    
+    }
+
     /**
-    * @Route("/profile/annonce-edit/getSousCategorie", methods={"POST"})
-    */
-   public function getSousCategorie(Request $request, SousCategorieRepository $SousCategorieRepository): Response
-   {
-       $cat = $request->request->get('cat');
-       $sous = $SousCategorieRepository->findByCategorie($cat);
-       $options = "";
-       // $selected = true;
-       foreach ($sous as $s) {
-           // if($selected){
-           $options .= '<option selected value="' . $s->getId() . '">' . $s->getTitre() . '</option>';
-           // $selected = false;
-       // }else{
-           // $options .= '<option value="' . $s->getId() . '">' . $s->getTitre() . '</option>';
-       }
-
-       // }
-    //    dd($options);
-
-       return new Response($options);
-   }
+     * @Route("/profile/annonce-edit/getSousCategorie", methods={"POST"})
+     */
+    public function getSousCategorie(Request $request, SousCategorieRepository $SousCategorieRepository): Response
+    {
+        $cat = $request->request->get('cat');
+        $sous = $SousCategorieRepository->findByCategorie($cat);
+        $options = "";
+        foreach ($sous as $s) {
+            $options .= '<option selected value="' . $s->getId() . '">' . $s->getTitre() . '</option>';
+        }
+        return new Response($options);
+    }
     /**
      * @Route("/profile/annonce-edit/{id}", name="profile-annonce-edit")
      */
     public function annonceEdit(Request $request, SousCategorieRepository $sousCategorieRepository, Annonce $id, EntityManagerInterface $entityManager): Response
     {
-        $cat = $id -> getCategorie();
-        $sous = $sousCategorieRepository -> findByCategorie($cat);
+        $cat = $id->getCategorie();
+        $sous = $sousCategorieRepository->findByCategorie($cat);
         // dd($sous);
         $form = $this->createForm(AnnonceType::class, $id);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $request->request;
-            $sous_id = $request->request -> get('sous');
-            $sous = $sousCategorieRepository -> findOneById($sous_id);
-            $id -> setSousCategorie($sous);
+            // $data = $request->request;
+            $sous_id = $request->request->get('sous');
+            $sous = $sousCategorieRepository->findOneById($sous_id);
+            $id->setSousCategorie($sous);
             $entityManager->flush();
             $this->addFlash("success", "Vos informations ont bien été mises à jour.");
             // On redirige vers la même page
             return new RedirectResponse($this->generateUrl('profile'));
         }
 
-        return $this->render('user/profil-ann-edit.html.twig', [            
+        return $this->render('user/profil-ann-edit.html.twig', [
             'form' => $form->createView(),
             'sous' => $sous,
             'ann' => $id,
         ]);
     }
-   
-   
+    /**
+     * @Route("/profile/annonce-delete/{id}", name="profile-annonce-delete")
+     */
+    public function annonceDelete(Request $request, SousCategorieRepository $sousCategorieRepository, Annonce $id, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($id);
+        $entityManager->flush();
+        $this->addFlash("success", "Vos informations ont bien été suprimées.");
+        // On redirige vers la même page
+        return new RedirectResponse($this->generateUrl('profile'));
+    }
+    /**
+     * @Route("/setIsActive", methods={"POST"})
+     */
+    public function setIsActive(Request $request, AnnonceRepository $annonceRepository, EntityManagerInterface $entityManager): Response
+    {
+
+        $annId = $request->request->get('id');
+        $ann = $annonceRepository->findOneById($annId);
+        $ann->setIsActive(true);
+        $entityManager->flush();
+        
+        return new Response('checked');
+    }
+    /**
+     * @Route("/unSetIsActive", methods={"POST"})
+     */
+    public function unSetIsActive(Request $request, AnnonceRepository $annonceRepository, EntityManagerInterface $entityManager): Response
+    {
+
+        $annId = $request->request->get('id');
+        $ann = $annonceRepository->findOneById($annId);
+        $ann->setIsActive(false);
+        $entityManager->flush();
+        
+        return new Response('checked');
+    }
 }

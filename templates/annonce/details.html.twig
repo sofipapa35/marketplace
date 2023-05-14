@@ -6,36 +6,36 @@
 {% block body %}
 	<div class="d-md-flex">
 		<div class="col-md-4">
-			<img src="{{asset('/img/image/' ~ annonce.imageName)}}" alt="{{annonce.titre}}" class="img-fluid">
+			<img src="{{asset('/img/image/' ~ ann.imageName)}}" alt="{{ann.titre}}" class="img-fluid">
 		</div>
 		<div>
 			<h3>
-				<b>{{annonce.titre|capitalize}}</b>
+				<b>{{ann.titre|capitalize}}</b>
 			</h3>
 			<div class="text-end text-secondary">
 				<small>Créé le
-					{{annonce.createdAt|date('d-m-Y')}}</small><br>
-				{% if annonce.updatedAt %}
+					{{ann.createdAt|date('d-m-Y')}}</small><br>
+				{% if ann.updatedAt %}
 					<small>Mis à jour le
-						{{annonce.updatedAt|date('d-m-Y')}}</small><br>
+						{{ann.updatedAt|date('d-m-Y')}}</small><br>
 				{% endif %}
-				{% if annonce.user.pseudo %}
+				{% if ann.user.pseudo %}
 					<small>Publiée par
-						{{annonce.user.pseudo}}</small>
+						{{ann.user.pseudo}}</small>
 				{% else %}
 					<small>Publiée par
-						{{annonce.user.prenom}}</small>
+						{{ann.user.prenom}}</small>
 				{% endif %}
 			</div>
 			<div>
-				<div class="py-3">{{annonce.prix|number_format(2)}}
+				<div class="py-3">{{ann.prix|number_format(2)}}
 					€</div>
 				<hr>
 				<h5 class="py-3">
 					<b>Desctiption</b>
 				</h5>
 				<div>
-					{{annonce.description|capitalize|raw}}
+					{{ann.description|capitalize|raw}}
 				</div>
 			</div>
 		</div>
@@ -55,8 +55,8 @@
 			</div>
 		{% endif %}
 		<h4>Postes</h4>
-		{% if annonce.postes %}
-			{% for poste in annonce.postes %}
+		{% if ann.postes %}
+			{% for poste in ann.postes %}
 				<div class="div-poste">
 					<div class="d-md-flex justify-content-between">
 						<div class="text-secondary">{{poste.user.pseudo ? poste.user.pseudo : poste.user.prenom}}</div>

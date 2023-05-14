@@ -20,11 +20,12 @@
 			</tr>
 			<tr>
 				<th class="align-top" scope="col">Description</th>
-                <td colspan="2">{{ann.description|raw}}</td>
+				<td colspan="2">{{ann.description|raw}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Prix</th>
-				<td>{{ann.prix|number_format(2)}} €</td>
+				<td>{{ann.prix|number_format(2)}}
+					€</td>
 			</tr>
 			<tr>
 				<th scope="col">Activée</th>
@@ -43,7 +44,16 @@
 				<td colspan="2">{{ann.updatedAt ? ann.updatedAt|date('d-m-Y') : '' }}</td>
 			</tr>
 		</thead>
-		<tbody>
-		</tbody>
+		<tbody></tbody>
 	</table>
+
+	<a href="{{ path('profile-annonce-detail', {'id': ann.id}) }}" class="btn btn-success">
+		<i class="fa-solid fa-eye"></i>
+	</a>
+	<a href="{{ path('profile-annonce-edit', {'id': ann.id}) }}" class="btn btn-primary">
+		<i class="fa-solid fa-pen"></i>
+	</a>
+	<a href="{{ path('profile-annonce-delete', {'id': ann.id}) }}" class="btn btn-danger">
+		<i class="fa-solid fa-trash"></i>
+	</a>
 {% endblock %}
