@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	<pre>
+    {{ dump(ann) }}
+</pre>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Num</th>
+				<th scope="col">Titre</th>
+				<th scope="col">Image</th>
+			</tr>
+			<tr>
+				<th class="align-middle" scope="row">{{ann.id}}</th>
+				<td class="align-middle">{{ann.titre}}</td>
+				<td class='col-md-3'><img src="{{asset('/img/image/' ~ ann.imageName)}}" alt="{{ann.titre}}" class='img-fluid'></td>
+			</tr>
+			<tr>
+				<th class="align-top" scope="col">Description</th>
+                <td colspan="2">{{ann.description|raw}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Prix</th>
+				<td>{{ann.prix|number_format(2)}} €</td>
+			</tr>
+			<tr>
+				<th scope="col">Activée</th>
+				<td colspan="2">{{ann.isActive ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-regular fa-xmark"></i>'}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Validée</th>
+				<td colspan="2">{{ann.isValid ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-regular fa-xmark"></i>'}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Crée</th>
+				<td colspan="2">{{ann.createdAt|date('d-m-Y')}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Dernier mis à jour</th>
+				<td colspan="2">{{ann.updatedAt ? ann.updatedAt|date('d-m-Y') : '' }}</td>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+{% endblock %}

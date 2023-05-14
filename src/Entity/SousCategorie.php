@@ -34,6 +34,11 @@ class SousCategorie
      */
     private $annonces;
 
+    public function __toString()
+    {
+        return $this->titre;
+    }
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();

@@ -42,6 +42,11 @@ class Adresse
      */
     private $principale;
 
+    public function __toString()
+    {
+        return $this->adresse;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

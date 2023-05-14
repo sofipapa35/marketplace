@@ -46,6 +46,16 @@ body {
       z-index: 5;
     }
 
+    .div-poste{
+      background-color: paleturquoise;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding: 10px 20px;
+      border-style: outset;
+      border-radius: 25px;
+    }
+    
+
   @media only screen and (max-width: 991.33px) {
     .dropd-ul {
       position: static;

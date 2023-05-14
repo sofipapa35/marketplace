@@ -54,6 +54,21 @@
 				</div>
 			</div>
 		{% endif %}
+		<h4>Postes</h4>
+		{% if annonce.postes %}
+			{% for poste in annonce.postes %}
+				<div class="div-poste">
+					<div class="d-md-flex justify-content-between">
+						<div class="text-secondary">{{poste.user.pseudo ? poste.user.pseudo : poste.user.prenom}}</div>
+						<div class="text-secondary">Créé le :
+							{{poste.createdAt|date('d-m-Y')}}</div>
+					</div>
+					<hr>
+					<div>{{poste.texte}}</div>
+				</div>
+			{% endfor %}
+		{% else %}
+			<h5>Il n'y a pas des postes</h5>
+		{% endif %}
 
-	</div>
-{% endblock %}
+	{% endblock %}

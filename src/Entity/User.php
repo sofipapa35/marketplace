@@ -94,6 +94,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $adresse;
 
+    public function __toString()
+    {
+        return $this->nom;
+    }
+
     public function __construct()
     {
         $this->postes = new ArrayCollection();
