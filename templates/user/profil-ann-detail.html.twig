@@ -18,6 +18,17 @@
 				<td class="align-middle">{{ann.titre}}</td>
 				<td class='col-md-3'><img src="{{asset('/img/image/' ~ ann.imageName)}}" alt="{{ann.titre}}" class='img-fluid'></td>
 			</tr>
+			{# {% if ann.image|length > 0 %}
+				<tr>
+					<th class="align-top" scope="col">Autres Images</th>
+					<td colspan="2">
+						{% for img in ann.image %}
+							<img src="{{path('/img/image/' ~ img.imageName)}}" alt="{{img.imageName}}">
+						{% endfor %}
+					</td>
+				</tr>
+			{% endif %} #}
+
 			<tr>
 				<th class="align-top" scope="col">Description</th>
 				<td colspan="2">{{ann.description|raw}}</td>
@@ -29,11 +40,11 @@
 			</tr>
 			<tr>
 				<th scope="col">Activée</th>
-				<td colspan="2">{{ann.isActive ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-regular fa-xmark"></i>'}}</td>
+				<td colspan="2">{{ann.isActive ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-x"></i>'}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Validée</th>
-				<td colspan="2">{{ann.isValid ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-regular fa-xmark"></i>'}}</td>
+				<td colspan="2">{{ann.isValid ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-x"></i>'}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Crée</th>

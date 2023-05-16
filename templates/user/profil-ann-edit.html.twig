@@ -3,20 +3,26 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-<pre>
-    {{ dump(ann.sousCategorie.id) }}
+	<pre>
+	{{ dump(ann, sous) }}
 </pre>
 	{{ form_start(form) }}
 	{{ form_widget(form) }}
-    
+
 	<label for="sous">Sous-categorie</label>
 	<select id="sous" name="sous" class='form-select'>
-    {% for s in sous %}
-		<option {{ann.sousCategorie.id == s.id ? 'selected' : ''}} value="{{s.id}}">{{s.titre}}</option>
-    {% endfor %}
-    {% if sous|length > 0 %}
-		<option {{ann.sousCategorie == null ? 'selected'}} value="{{null}}"></option>
-    {% endif %}
+		{% if ann.sousCategorie|length > 0 %}
+			{% for s in sous %}
+				<option {{ann.sousCategorie.id == s.id ? 'selected' : ''}} value="{{s.id}}">{{s.titre}}</option>
+			{% endfor %}
+			{% else %}
+			{% for s in sous %}
+				<option value="{{s.id}}">{{s.titre}}</option>
+			{% endfor %}
+		{% endif %}
+		{% if sous|length > 0 %}
+			<option {{ann.sousCategorie == null ? 'selected'}} value="{{null}}"></option>
+		{% endif %}
 	</select>
 	<button type="submit" class="btn btn-dark my-2">Modifier</button>
 	{{ form_end(form) }}

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Form\UserType;
+use DateTimeImmutable;
 use App\Entity\Annonce;
 use App\Form\AnnonceType;
 use App\Repository\UserRepository;
@@ -14,16 +16,106 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
     /**
      * @Route("/profile", name="profile")
      */
-    public function profile(UserRepository $userRepository): Response
+    public function profile(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        // dd($user);
+        $profile_form_user = $this->createForm(UserType::class, $user, ['user' => true]); 
+
+        $profile_form_user->handleRequest($request);  
+
+        if ($profile_form_user->isSubmitted() && $profile_form_user->isValid()) {
+            dd($request->request->all());
+            $user -> setNom($request->request->all()['user']['nom']);
+            $user -> setPrenom($request->request->all()['user']['prenom']);
+            $user -> setPseudo($request->request->all()['user']['pseudo']);
+            $user -> setTelephone($user->getTelephone());
+            $entityManager->flush();
+            $this->addFlash("success", "Vos informations ont bien été mises à jour.");
+            // On redirige vers la même page
+            $this->redirectToRoute('profile');
+        }
+        $profile_form_telephone = $this->createForm(UserType::class, $user, ['telephone' => true]); 
+
+        $profile_form_telephone->handleRequest($request);  
+        if ($profile_form_telephone->isSubmitted() && $profile_form_telephone->isValid()) {
+            // dd($request->request->all());
+            $user -> setTelephone($request->request->all()['user']['telephone']);
+            $entityManager->flush();
+            $this->addFlash("success", "Vos informations ont bien été mises à jour.");
+            // On redirige vers la même page
+            $this->redirectToRoute('profile');
+        }
+
+        $profile_form_password = $this->createForm(UserType::class, $user, ['password' => true]); 
+
+        $profile_form_password->handleRequest($request);  
+
+        if ($profile_form_password->isSubmitted() && $profile_form_password->isValid()) {
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $profile_form_password->get('plainPassword')->getData()));
+            $entityManager->flush();
+            $this->addFlash("success", "Vos informations ont bien été mises à jour.");
+            // On redirige vers la même page
+            $this->redirectToRoute('profile');
+        }
+
         return $this->render('user/profile.html.twig', [
-            // 'user' => $user,
+            'formUser' => $profile_form_user->createView(),
+            'formTelephone' => $profile_form_telephone->createView(),
+            'formPassword' => $profile_form_password->createView(),
+        ]);
+    }
+    /**
+     * @Route("/profile/getSousCategorie", methods={"POST"})
+     * @Route("/profile/annonce-edit/getSousCategorie", methods={"POST"})
+     */
+    public function getSousCategorie(Request $request, SousCategorieRepository $SousCategorieRepository): Response
+    {
+        $cat = $request->request->get('cat');
+        $sous = $SousCategorieRepository->findByCategorie($cat);
+        $options = "<option selected value='{{null}}'></option>";
+        foreach ($sous as $s) {
+            $options .= '<option value="' . $s->getId() . '">' . $s->getTitre() . '</option>';
+        }
+        return new Response($options);
+    }
+    /**
+     * @Route("/profile/new", name="new", methods={"GET", "POST"})
+     */
+    public function new(Request $request, SousCategorieRepository $sousCategorieRepository, EntityManagerInterface $entityManager): Response
+    {
+        $ann = new Annonce();
+        
+        $form = $this->createForm(AnnonceType::class, $ann);
+        
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $ann -> setCreatedAt(new DateTimeImmutable);
+            $ann -> setIsValid(false);
+            $sous_id = $request->request->get('sous');
+            $sous = $sousCategorieRepository->findOneById($sous_id);
+            $ann->setSousCategorie($sous);
+            $ann -> setUser($this->getUser());
+            $entityManager->flush();
+            $this->addFlash("success", "Vos informations ont bien été mises à jour.");
+            $entityManager->persist($ann);
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('profile', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('user/new-annonce.html.twig', [            
+            'form' => $form->createView(),
         ]);
     }
     /**
@@ -36,20 +128,7 @@ class UserController extends AbstractController
             'ann' => $ann,
         ]);
     }
-
-    /**
-     * @Route("/profile/annonce-edit/getSousCategorie", methods={"POST"})
-     */
-    public function getSousCategorie(Request $request, SousCategorieRepository $SousCategorieRepository): Response
-    {
-        $cat = $request->request->get('cat');
-        $sous = $SousCategorieRepository->findByCategorie($cat);
-        $options = "";
-        foreach ($sous as $s) {
-            $options .= '<option selected value="' . $s->getId() . '">' . $s->getTitre() . '</option>';
-        }
-        return new Response($options);
-    }
+    
     /**
      * @Route("/profile/annonce-edit/{id}", name="profile-annonce-edit")
      */
@@ -59,9 +138,9 @@ class UserController extends AbstractController
         $sous = $sousCategorieRepository->findByCategorie($cat);
         // dd($sous);
         $form = $this->createForm(AnnonceType::class, $id);
-
+        
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             // $data = $request->request;
             $sous_id = $request->request->get('sous');
@@ -72,7 +151,7 @@ class UserController extends AbstractController
             // On redirige vers la même page
             return new RedirectResponse($this->generateUrl('profile'));
         }
-
+        
         return $this->render('user/profil-ann-edit.html.twig', [
             'form' => $form->createView(),
             'sous' => $sous,
@@ -95,7 +174,7 @@ class UserController extends AbstractController
      */
     public function setIsActive(Request $request, AnnonceRepository $annonceRepository, EntityManagerInterface $entityManager): Response
     {
-
+        
         $annId = $request->request->get('id');
         $ann = $annonceRepository->findOneById($annId);
         $ann->setIsActive(true);
@@ -108,7 +187,7 @@ class UserController extends AbstractController
      */
     public function unSetIsActive(Request $request, AnnonceRepository $annonceRepository, EntityManagerInterface $entityManager): Response
     {
-
+        
         $annId = $request->request->get('id');
         $ann = $annonceRepository->findOneById($annId);
         $ann->setIsActive(false);

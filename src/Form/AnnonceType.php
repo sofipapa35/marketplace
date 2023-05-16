@@ -38,7 +38,8 @@ class AnnonceType extends AbstractType
                 'required' => false
                 ])
             ->add('prix')
-            ->add('isActive', CheckboxType::class, ['label' => "Activée ?"])
+            ->add('isActive', CheckboxType::class, ['label' => "Activée ?",
+            'required' => false])
             ->add(
                 'sexe',
                 ChoiceType::class,

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+    
+	<label for="sous">Sous-categorie</label>
+	<select id="sous" name="sous" class='form-select'>
+	
+	</select>
+	<button type="submit" class="btn btn-dark my-2">Modifier</button>
+	{{ form_end(form) }}
+
+
+{% endblock %}

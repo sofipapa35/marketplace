@@ -31,7 +31,7 @@ class HomeController extends AbstractController
             if (count($c->getSousCategories()) > 0) {
                 $li .= '<div class="ps-5"><button class="btn-nav"><a href="/annonce/Categorie/' . $c->getTitre() . '" id="' . $c->getTitre() . '">' . $c->getTitre() . '</a></button>
                             <div class="dropdown-nav">
-                                <button class="btn-nav" style="border-left:1px solid #0d8bf2">
+                                <button class="btn-nav" style="border-left:1px solid #e1e9e1; border-right:1px solid #e1e9e1; ">
                                     <i class="fa fa-caret-down"></i>
                                 </button>
                                 <div class="dropdown-content-nav">';

@@ -5,9 +5,10 @@
 {% endblock %}
 
 {% block body %}
-	<pre>
-    {{ dump(app.user) }}
-</pre>
+	{# <pre>
+									    {{ dump(app.user) }}
+									</pre> #}
+	<a href="{{path('new')}}" class="btn btn-warning my-3">Créez une annonce</a>
 	<div class="accordion" id="accordionExample">
 		<div class="accordion-item">
 			<h2 class="accordion-header" id="headingOne">
@@ -17,23 +18,129 @@
 			</h2>
 			<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
 				<div class="accordion-body">
-					<h4>Telephone</h4>
+					<h4>{{app.user.prenom}}
+						{% if app.user.pseudo %}
+							"{{app.user.pseudo}}"
+						{% endif %}
+						{{app.user.nom}}</h4>
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						<i class="fa-solid fa-pen"></i>
+					</button>
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Modifiez vos données</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									{{ form_start(formUser) }}
+									{{ form_row(formUser.nom) }}
+									{{ form_row(formUser.prenom) }}
+									{{ form_row(formUser.pseudo) }}
+									{{ form_row(formUser.email) }}
+									<div class="d-flex justify-content-center">
+										<button type="submit" class="btn btn-dark">Modifier</button>
+									</div>
+									{{ form_end(formUser) }}
+								</div>
+								<div class="d-flex justify-content-center">
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<b>
+						<i class="fa-solid fa-phone"></i>
+					</b>
 					{% if app.user.telephone %}
 						{{app.user.telephone}}
+						<br>
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+							<i class="fa-solid fa-pen"></i>
+						</button>
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Modifiez votre numero telephone</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										{{ form_start(formTelephone) }}
+										{{ form_row(formTelephone.telephone) }}
+										<div class="d-flex justify-content-center">
+											<button type="submit" class="btn btn-dark">Modifier</button>
+										</div>
+										{{ form_end(formTelephone) }}
+									</div>
+									<div class="d-flex justify-content-center">
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
 					{% else %}
-						<button>Ajoutez</button>
+						<button type="button" class="btn btn-warning mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+							<i class="fa-solid fa-plus"></i>
+						</button>
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Ajoutez numero telephone</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										{{ form_start(formTelephone) }}
+										{{ form_row(formTelephone.telephone) }}
+										<div class="d-flex justify-content-center">
+											<button type="submit" class="btn btn-dark">Ajoutez</button>
+										</div>
+										{{ form_end(formTelephone) }}
+									</div>
+									<div class="d-flex justify-content-center">
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					{% endif %}
 					<hr>
-					<h4>Adresse</h4>
+					<b>
+						<i class="fa-solid fa-location-dot"></i>
+					</b>
 					{% if app.user.adresse|length > 0 %}
 						{% for adresse in app.user.adresse %}
 							{% if adresse.principale %}
 								{{adresse}}
+								<br>
+								<a href="#" class="btn btn-success my-2">
+									<i class="fa-solid fa-pen"></i>
+								</a>
+								<a href="#" class="btn btn-warning">
+									<i class="fa-solid fa-plus"></i>
+								</a>
 							{% endif %}
 						{% endfor %}
 					{% else %}
-						<button>Ajoutez</button>
+						<a href="#" class="btn btn-warning">
+							<i class="fa-solid fa-plus"></i>
+						</a>
 					{% endif %}
+					<div class="add-address"></div>
 				</div>
 			</div>
 		</div>
@@ -103,7 +210,7 @@
 							{% for fav in app.user.favoris %}
 								<div class="col-6 col-md-3 p-1">
 									<div class="card">
-										<a href="{{path('annonce-detail', {'id': fav.id})}}">
+										<a href="{{path('annonceDetail', {'id': fav.id})}}">
 											<img src="{{asset('/img/image/' ~ fav.imageName)}}" class="card-img-top" alt="{{fav.titre}}">
 											<div class="card-body">
 												<h4 class="text-dark text-center">{{fav.titre|capitalize}}</h4>
@@ -114,7 +221,7 @@
 							{% endfor %}
 						</div>
 					{% else %}
-						<h4>Il n'y a pas des favoris</h4>
+						<h5>Il n'y a pas des favoris</h5>
 					{% endif %}
 				</div>
 			</div>
@@ -130,7 +237,7 @@
 					{% if app.user.commandes|length > 0 %}
 
 						{% else %}
-							<h4>Il n'y a pas des commades</h4>
+							<h5>Il n'y a pas des commades</h5>
 					{% endif %}
 
 				</div>

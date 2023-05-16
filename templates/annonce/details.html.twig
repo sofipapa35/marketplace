@@ -4,71 +4,66 @@
 {% endblock %}
 
 {% block body %}
-	<div class="d-md-flex">
-		<div class="col-md-4">
-			<img src="{{asset('/img/image/' ~ ann.imageName)}}" alt="{{ann.titre}}" class="img-fluid">
-		</div>
-		<div>
-			<h3>
-				<b>{{ann.titre|capitalize}}</b>
-			</h3>
-			<div class="text-end text-secondary">
-				<small>Créé le
-					{{ann.createdAt|date('d-m-Y')}}</small><br>
-				{% if ann.updatedAt %}
-					<small>Mis à jour le
-						{{ann.updatedAt|date('d-m-Y')}}</small><br>
-				{% endif %}
-				{% if ann.user.pseudo %}
-					<small>Publiée par
-						{{ann.user.pseudo}}</small>
-				{% else %}
-					<small>Publiée par
-						{{ann.user.prenom}}</small>
-				{% endif %}
+	<div class="mb-3">
+		<div class="row g-0">
+			<div class="col-md-4">
+				<img src="{{asset('/img/image/' ~ ann.imageName)}}" alt="{{ann.titre}}" class="img-fluid">
 			</div>
-			<div>
-				<div class="py-3">{{ann.prix|number_format(2)}}
-					€</div>
-				<hr>
-				<h5 class="py-3">
-					<b>Desctiption</b>
-				</h5>
-				<div>
-					{{ann.description|capitalize|raw}}
+			<div class="col-md-8">
+				<div class="card-body">
+					<h5 class="card-title">{{ann.titre|capitalize}}</h5>
+					<div class="text-end text-secondary">
+						<small>Créé le
+							{{ann.createdAt|date('d-m-Y')}}</small><br>
+						{% if ann.updatedAt %}
+							<small>Mis à jour le
+								{{ann.updatedAt|date('d-m-Y')}}</small><br>
+						{% endif %}
+						{% if ann.user.pseudo %}
+							<small>Publiée par
+								{{ann.user.pseudo}}</small>
+						{% else %}
+							<small>Publiée par
+								{{ann.user.prenom}}</small>
+						{% endif %}
+					</div>
+					<div class="card-text">{{ann.prix|number_format(2)}} €</div>
+					<div class="card-text">{{ann.description|capitalize|raw}}</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div>
 
-		{% if relatives|length > 0 %}
-			<div class="my-5">
-				<h4>Vous pouvez aimez aussi</h4>
-				<div class="d-flex flex-wrap">
-					{% for r in relatives %}
-						<a href="{{path('annonce-detail', {id: r.id})}}" class="col-6 col-md-2 p-1 card img">
-							<img src="{{asset('/img/image/' ~ r.imageName)}}" alt="{{r.titre}}" class="img-fluid">
+
+	{% if relatives|length > 0 %}
+		<div class="my-5">
+			<h4>Vous pouvez aimez aussi</h4>
+			<div class="d-flex flex-wrap">
+				{% for r in relatives %}
+					<div class="p-1">
+						<a href="{{path('annonceDetail', {id: r.id})}}">
+							<div class="card" class="col-6 col-md-2">
+								<img src="{{asset('/img/image/' ~ r.imageName)}}" alt="{{r.titre}}" class="img-fluid">
+							</div>
 						</a>
-					{% endfor %}
-				</div>
-			</div>
-		{% endif %}
-		<h4>Postes</h4>
-		{% if ann.postes %}
-			{% for poste in ann.postes %}
-				<div class="div-poste">
-					<div class="d-md-flex justify-content-between">
-						<div class="text-secondary">{{poste.user.pseudo ? poste.user.pseudo : poste.user.prenom}}</div>
-						<div class="text-secondary">Créé le :
-							{{poste.createdAt|date('d-m-Y')}}</div>
 					</div>
-					<hr>
-					<div>{{poste.texte}}</div>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+	{% if ann.postes|length > 0 %}
+		<h4>Postes</h4>
+		{% for poste in ann.postes %}
+			<div class="div-poste">
+				<div class="d-md-flex justify-content-between">
+					<div class="text-secondary">{{poste.user.pseudo ? poste.user.pseudo : poste.user.prenom}}</div>
+					<div class="text-secondary">Créé le :
+						{{poste.createdAt|date('d-m-Y')}}</div>
 				</div>
-			{% endfor %}
-		{% else %}
-			<h5>Il n'y a pas des postes</h5>
-		{% endif %}
+				<hr>
+				<div>{{poste.texte}}</div>
+			</div>
+		{% endfor %}
+	{% endif %}
 
-	{% endblock %}
+{% endblock %}

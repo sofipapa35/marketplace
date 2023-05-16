@@ -7,7 +7,7 @@ $(document).ready(function(){
 
 $("#annonce_categorie").on("change", function () {
     var cat = $(this).val();
-    
+    console.log(cat);
     $.ajax({
         url: 'getSousCategorie',
         type: 'POST',
