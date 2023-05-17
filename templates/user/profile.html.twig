@@ -5,9 +5,6 @@
 {% endblock %}
 
 {% block body %}
-	{# <pre>
-									    {{ dump(app.user) }}
-									</pre> #}
 	<a href="{{path('new')}}" class="btn btn-warning my-3">Créez une annonce</a>
 	<div class="accordion" id="accordionExample">
 		<div class="accordion-item">
@@ -18,14 +15,21 @@
 			</h2>
 			<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
 				<div class="accordion-body">
-					<h4>{{app.user.prenom}}
-						{% if app.user.pseudo %}
-							"{{app.user.pseudo}}"
-						{% endif %}
-						{{app.user.nom}}</h4>
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-						<i class="fa-solid fa-pen"></i>
-					</button>
+					<div class="d-flex justify-content-between align-items-start">
+						<div class="my-auto">
+							<h4>{{app.user.prenom}}
+								{% if app.user.pseudo %}
+									"{{app.user.pseudo}}"
+								{% endif %}
+								{{app.user.nom}}</h4>
+							<i class="fa-solid fa-at"></i>
+							{{app.user.email}}
+						</div>
+
+						<button type="button" class="btn btn-primary my-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
+							<i class="fa-solid fa-pen"></i>
+						</button>
+					</div>
 					<!-- Modal -->
 					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
@@ -54,15 +58,18 @@
 						</div>
 					</div>
 					<hr>
-					<b>
-						<i class="fa-solid fa-phone"></i>
-					</b>
+
 					{% if app.user.telephone %}
-						{{app.user.telephone}}
-						<br>
-						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
-							<i class="fa-solid fa-pen"></i>
-						</button>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="my-auto">
+								<i class="fa-solid fa-phone"></i>
+								{{app.user.telephone}}
+							</div>
+
+							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+								<i class="fa-solid fa-pen"></i>
+							</button>
+						</div>
 						<!-- Modal -->
 						<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							<div class="modal-dialog">
@@ -88,11 +95,19 @@
 							</div>
 						</div>
 
-
 					{% else %}
-						<button type="button" class="btn btn-warning mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-							<i class="fa-solid fa-plus"></i>
-						</button>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="my-auto">
+								<b>
+									<i class="fa-solid fa-phone"></i>
+									-
+								</b>
+							</div>
+
+							<button type="button" class="btn btn-warning my-auto" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+								<i class="fa-solid fa-plus"></i>
+							</button>
+						</div>
 						<!-- Modal -->
 						<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							<div class="modal-dialog">
@@ -119,28 +134,135 @@
 						</div>
 					{% endif %}
 					<hr>
-					<b>
-						<i class="fa-solid fa-location-dot"></i>
-					</b>
+
+					{# -------------------------------------------------------- Adresse ---------------------------------------------------------- #}
 					{% if app.user.adresse|length > 0 %}
-						{% for adresse in app.user.adresse %}
-							{% if adresse.principale %}
-								{{adresse}}
-								<br>
-								<a href="#" class="btn btn-success my-2">
-									<i class="fa-solid fa-pen"></i>
-								</a>
-								<a href="#" class="btn btn-warning">
-									<i class="fa-solid fa-plus"></i>
-								</a>
+						<div class="d-flex flex-row-reverse justify-content-between align-items-start">
+							<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#exampleModal5">
+								<i class="fa-solid fa-pen"></i>
+							</button>
+							{% for adresse in app.user.adresse %}
+								{% if adresse.principale %}
+									<div class="my-auto">
+										<b>
+											<i class="fa-solid fa-location-dot"></i>
+										</b>
+										{{adresse.adresse}},
+										{{adresse.zip}}&nbsp{{adresse.ville}}
+										<br>
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal6">
+											Gerez vos adresse
+										</button>
+
+									</div>
+									<!-- Modal -->
+									<div class="modal fade" id="exampleModal6" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													{% for adresse in user.adresse %}
+														<div class="my-1">
+															<div class="card">
+																<div class="card-body">
+																	<h5 class="card-title">Adresse
+																		{{loop.index0 + 1}}</h5>
+																	<div class="card-text">
+																		{{adresse.adresse}},
+																		<br>
+																		{{adresse.zip}}&nbsp{{adresse.ville}}
+																	</div>
+
+																	{# <label class="switch"> #}
+																		<input type="radio" {{adresse.principale ? 'checked' : ''}} class="checkboxIsActive" name="adresse" value='{{adresse.id}}'>
+																		{# <span class="slider round"></span> #}
+																	{# </label> #}
+																	<a href="#" class="card-link">Card link</a>
+																</div>
+															</div>
+														</div>
+													{% endfor %}
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+													<button type="button" class="btn btn-primary">Save changes</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
 							{% endif %}
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Modifiez l'adresse principale</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											{{ form_start(formAdresseTrue) }}
+											<div class="d-flex justify-content-center">
+												<button type="submit" class="btn btn-dark">Ajoutez</button>
+											</div>
+											{{ form_end(formAdresseTrue) }}
+										</div>
+										<div class="d-flex justify-content-center">
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						{% endfor %}
 					{% else %}
-						<a href="#" class="btn btn-warning">
-							<i class="fa-solid fa-plus"></i>
-						</a>
+						<div class="my-auto">
+							<b>
+								<i class="fa-solid fa-location-dot"></i>
+								-
+							</b>
+						</div>
 					{% endif %}
-					<div class="add-address"></div>
+
+					<div class="d-flex justify-content-end">
+						<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal4">
+							<i class="fa-solid fa-plus"></i>
+						</button>
+					</div>
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Ajoutez une adresse</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									{{ form_start(formAdresse) }}
+									{{ form_row(formAdresse.adresse) }}
+									{{ form_row(formAdresse.zip) }}
+									{{ form_row(formAdresse.ville) }}
+									<div class="d-flex justify-content-center">
+										<button type="submit" class="btn btn-dark">Ajoutez</button>
+									</div>
+									{{ form_end(formAdresse) }}
+								</div>
+								<div class="d-flex justify-content-center">
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
 				</div>
 			</div>
 		</div>
@@ -175,7 +297,7 @@
 									</td>
 									<td>
 										<label class="switch">
-											<input type="checkbox" {{ann.isActive ? 'checked' : ''}} class="checkboxIsActive" value='{{ann.id}}'>
+											<input type="checkbox" {{ann.isActive ? 'checked' : ''}} class="checkboxIsActive" name="annonce" value='{{ann.id}}'>
 											<span class="slider round"></span>
 										</label>
 									</td>

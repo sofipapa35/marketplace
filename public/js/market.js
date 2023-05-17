@@ -23,24 +23,30 @@ $("#annonce_categorie").on("change", function () {
 
 $('.checkboxIsActive').click(function(){
     if($(this).prop("checked") == true){
+        var name = $(this).attr('name');
+        console.log(name)
         var id = $(this).val();
         console.log(id);
         $.ajax({
             url: 'setIsActive',
             type: 'POST',
             data: {
-                'id' : id
+                'id' : id,
+                'name' : name
             }
         })
     }
     else if($(this).prop("checked") == false){
+        var name = $('.checkboxIsActive').attr('name');
+        console.log(name)
         var id = $(this).val();
         console.log(id);
         $.ajax({
             url: 'unSetIsActive',
             type: 'POST',
             data: {
-                'id' : id
+                'id' : id,
+                'name' : name
             }
         })
     }
