@@ -63,16 +63,16 @@ class AnnonceRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-//    public function getRelatives1($annId): ?Annonce
-//    {
-//         return $this->createQueryBuilder('a')
-//         ->join('a.relatives1', 'r1')
-//         ->andWhere('r1.cle1 = :val1')
-//            ->setParameter('val1', $annId)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }   
+public function getSearchValues($value)
+    {
+        return $this->createQueryBuilder('a')
+        ->where('a.id LIKE :terms')
+        ->setParameter('terms', '%'.$value.'%')
+        ->orderBy('a.id', 'ASC')
+        ->getQuery()
+        ->getResult()
+        ;
+        }  
 //    public function getRelatives2($annId): ?Annonce
 //    {
 //         return $this->createQueryBuilder('a')

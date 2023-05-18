@@ -53,9 +53,22 @@ $('.checkboxIsActive').click(function(){
 });
 
 // ----------------------- Dropdown Admin Search --------------
-$('.dropdown-menu').hide();
-$('.filter-button').clicl(function(){
-$('.dropdown-menu').show();
+$('.dropdown-search').hide();
+$('.filter-button').click(function(){
+    $('.dropdown-search').toggle();
+});
+
+$('.search').keyup(function(){
+    var value = $(this).val();
+    $.ajax({
+        url: 'search',
+        type: 'POST',
+        data: {
+            'value' : value
+        }
+    }).done(function (response) {
+        $('#result').html(response);
+    })
 })
 
 });
