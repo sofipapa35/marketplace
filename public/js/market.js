@@ -52,4 +52,10 @@ $('.checkboxIsActive').click(function(){
     }
 });
 
+// ----------------------- Dropdown Admin Search --------------
+$('.dropdown-menu').hide();
+$('.filter-button').clicl(function(){
+$('.dropdown-menu').show();
+})
+
 });

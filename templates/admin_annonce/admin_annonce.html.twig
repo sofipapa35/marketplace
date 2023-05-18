@@ -1,0 +1,40 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Annonces{% endblock %}
+
+{% block body %}
+<pre>
+    {{ dump(annonces) }}
+</pre>
+<h3 class="my-3">Toutes les annonces</h3>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col" class="align-baseline">Num <a href="" class="btn btn-light filter-button" name="filter-created"><i class="align-middle" data-feather="filter"></i></a></th>
+      <th scope="col" class="align-baseline">Image</th>
+      <th scope="col" class="align-baseline">Titre <a href="" class="btn btn-light filter-button" name="filter-title"><i class="align-middle" data-feather="filter"></i></a></th>
+      <th scope="col" class="align-baseline">Date de creation <a href="" class="btn btn-light filter-button" name="filter-created"><i class="align-middle" data-feather="filter"></i></a></th>
+      <th scope="col" class="align-baseline"></th>
+    </tr>
+  </thead>
+  
+  <ul class="dropdown-menu">
+    ...
+  </ul>
+  <tbody>
+  {% for ann in annonces %}
+     <tr>
+      <th scope="row">{{ann.id}}</th>
+      <td class="col-md-2"><img src="{{asset('/img/image/' ~ ann.imageName)}}" alt="{{ann.imageName}}" class='img-fluid'></td>
+      <td>{{ann.titre}}</td>
+      <td>{{ann.createdAt|date('d-m-Y')}}</td>
+      <td>
+      
+      </td>
+    </tr>
+  {% endfor %}
+   
+  </tbody>
+</table>
+
+{% endblock %}
