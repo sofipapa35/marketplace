@@ -3,9 +3,6 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-	<pre>
-    {{ dump(ann) }}
-</pre>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -58,7 +55,7 @@
 		<tbody></tbody>
 	</table>
 
-	<a href="{{ path('profile-annonce-detail', {'id': ann.id}) }}" class="btn btn-success">
+	<a href="{{ path('annonceDetail', {'id': ann.id}) }}" class="btn btn-success">
 		<i class="fa-solid fa-eye"></i>
 	</a>
 	<a href="{{ path('profile-annonce-edit', {'id': ann.id}) }}" class="btn btn-primary">

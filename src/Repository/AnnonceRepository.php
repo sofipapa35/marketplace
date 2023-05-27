@@ -63,42 +63,34 @@ class AnnonceRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-public function getSearchValues($value)
+public function getSearchId($value)
     {
         return $this->createQueryBuilder('a')
         ->where('a.id LIKE :terms')
-        ->setParameter('terms', '%'.$value.'%')
+        ->setParameter('terms', $value.'%')
         ->orderBy('a.id', 'ASC')
         ->getQuery()
         ->getResult()
         ;
-        }  
-//    public function getRelatives2($annId): ?Annonce
-//    {
-//         return $this->createQueryBuilder('a')
-//         ->join('a.relatives2', 'r2')
-//         ->orWhere('r2.cle2 = :val2')
-//            ->setParameter('val2', $annId)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-   
-//  public function getArticlesHome($category_id, $locale): array
-//  {
-//      return $this->createQueryBuilder('a')
-//             ->join('a.article', 'ar')
-//             ->join('ar.category', 'c')
-//          ->andWhere('c.id = :val2')
-//          ->andWhere('ar.active = :val3')
-//          ->andWhere('a.lang = :val4')
-//          ->setParameter('val2', $category_id)
-//          ->setParameter('val3', true)
-//          ->setParameter('val4', $locale)
-//       //    ->orderBy('a.id', 'ASC')
-//       //    ->setMaxResults(10)
-//          ->getQuery()
-//          ->getResult()
-//      ;
-//  }
+    }  
+public function getSearchTitre($value)
+{
+    return $this->createQueryBuilder('a')
+    ->where('a.titre LIKE :terms')
+    ->setParameter('terms', '%'.$value.'%')
+    ->orderBy('a.titre', 'ASC')
+    ->getQuery()
+    ->getResult()
+    ;
+}    
+public function getSearchDate($value)
+{
+    return $this->createQueryBuilder('a')
+    ->where('a.createdAt LIKE :terms')
+    ->setParameter('terms', '%'.$value.'%')
+    ->orderBy('a.createdAt', 'ASC')
+    ->getQuery()
+    ->getResult()
+    ;
+}
 }

@@ -15,6 +15,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminAnnonceController extends AbstractController
 {
     /**
+     * @Route("/findNonValid")
+     */
+    public function findNonValid(Request $request, AnnonceRepository $annonceRepository): Response
+    {
+            $annonces = $annonceRepository->findByIsValid(false);
+            if (!$annonces) {
+                $response = "Il n'y a pas des annonces pas validées";
+            } else {
+                $response = '';
+                foreach ($annonces as $a) {
+                    $response .= '<tr><th scope="row">' . $a->getId() . '</th>
+                <td class="col-md-2"><img src="/../img/image/' . $a->getImageName() . '" alt=' .  $a->getImageName() . ' class="img-fluid"></td>
+                <td>' . $a->getTitre() . '</td>
+                <td>' . $a->getCreatedAt()->format('d-m-Y') . '</td><td></td></tr>';
+                };
+            };
+        return new Response($response);
+    }
+    /**
      * @Route("/", name="app_admin_annonce")
      */
     public function index(AnnonceRepository $annonceRepository): Response
@@ -23,18 +42,5 @@ class AdminAnnonceController extends AbstractController
         return $this->render('admin_annonce/admin_annonce.html.twig', [
             'annonces' => $annonces,
         ]);
-    }
-    /**
-     * @Route("/search", methods="POST")
-     */
-    public function search(Request $request, AnnonceRepository $annonceRepository): Response
-    {
-        $value = $request->request->all()['value'];
-        $annonces = $annonceRepository -> getSearchValues($value);
-        dd($annonces);
-
-        $response = 'ok';
-        
-        return new Response($response);
     }
 }
