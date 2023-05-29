@@ -93,4 +93,40 @@ public function getSearchDate($value)
     ->getResult()
     ;
 }
+public function getSearchIdIsValid($value, $isValid)
+    {
+        return $this->createQueryBuilder('a')
+        ->andwhere('a.id LIKE :terms')
+        ->andwhere('a.isValid = :val')
+        ->setParameter('terms', $value.'%')
+        ->setParameter('val', $isValid)
+        ->orderBy('a.id', 'ASC')
+        ->getQuery()
+        ->getResult()
+        ;
+    }  
+public function getSearchTitreIsValid($value, $isValid)
+{
+    return $this->createQueryBuilder('a')
+    ->andwhere('a.titre LIKE :terms')
+    ->andwhere('a.isValid = :val')
+    ->setParameter('terms', '%'.$value.'%')
+    ->setParameter('val', $isValid)
+    ->orderBy('a.titre', 'ASC')
+    ->getQuery()
+    ->getResult()
+    ;
+}    
+public function getSearchDateIsValid($value, $isValid)
+{
+    return $this->createQueryBuilder('a')
+    ->andwhere('a.createdAt LIKE :terms')
+    ->andwhere('a.isValid = :val')
+    ->setParameter('terms', '%'.$value.'%')
+    ->setParameter('val', $isValid)
+    ->orderBy('a.createdAt', 'ASC')
+    ->getQuery()
+    ->getResult()
+    ;
+}
 }

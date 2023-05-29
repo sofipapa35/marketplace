@@ -1,0 +1,74 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+<pre>
+	{{ dump(ann) }}
+</pre>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Num</th>
+				<th scope="col">Titre</th>
+				<th scope="col">Image</th>
+			</tr>
+			<tr class="border border-3">
+				<th class="align-middle" scope="row">{{ann.id}}</th>
+				<td class="align-middle">{{ann.titre}}</td>
+				<td class='col-md-3'><img src="{{asset('/img/image/' ~ ann.imageName)}}" alt="{{ann.titre}}" class='img-fluid'></td>
+			</tr>
+			{# {% if ann.image|length > 0 %}
+							<tr>
+								<th class="align-top" scope="col">Autres Images</th>
+								<td colspan="2">
+									{% for img in ann.image %}
+										<img src="{{path('/img/image/' ~ img.imageName)}}" alt="{{img.imageName}}">
+									{% endfor %}
+								</td>
+							</tr>
+						{% endif %} #}
+			<tr>
+				<th class="align-top" scope="col">Description</th>
+				<td colspan="2">{{ann.description|raw}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Prix</th>
+				<td>{{ann.prix|number_format(2)}}
+					€</td>
+			</tr>
+			<tr>
+				<th scope="col">Activée</th>
+				<td colspan="2">{{ann.isActive ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-x"></i>'}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Validée</th>
+				<td colspan="2">
+					<label class="switch">
+						<input type="checkbox" id="adminValid" name="{{ann.id}}">
+						<span class="slider round"></span>
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<th scope="col">Crée</th>
+				<td colspan="2">{{ann.createdAt|date('d-m-Y')}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Dernier mis à jour</th>
+				<td colspan="2">{{ann.updatedAt ? ann.updatedAt|date('d-m-Y') : '' }}</td>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+
+	<a href="{{ path('annonceDetail', {'id': ann.id}) }}" class="btn btn-success">
+		<i class="fa-solid fa-eye"></i>
+	</a>
+	<a href="{{ path('profile-annonce-edit', {'id': ann.id}) }}" class="btn btn-primary">
+		<i class="fa-solid fa-pen"></i>
+	</a>
+	<a href="{{ path('profile-annonce-delete', {'id': ann.id}) }}" class="btn btn-danger">
+		<i class="fa-solid fa-trash"></i>
+	</a>
+{% endblock %}

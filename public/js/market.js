@@ -1,13 +1,7 @@
 $(document).ready(function () {
-  //     $('.dropd-ul').hide();
-  //     $(".nav-button").on("click", function(){
-  //             $(this).find('ul').slideToggle(400);
-  //             $('.nav-button ul').not($(this).find('ul')).hide();
-  // });
 
   $("#annonce_categorie").on("change", function () {
     var cat = $(this).val();
-    console.log(cat);
     $.ajax({
       url: "getSousCategorie",
       type: "POST",
@@ -24,7 +18,6 @@ $(document).ready(function () {
   $(".checkboxIsActive").click(function () {
     if ($(this).prop("checked") == true) {
       var name = $(this).attr("name");
-      console.log(name);
       var id = $(this).val();
       console.log(id);
       $.ajax({
@@ -37,7 +30,6 @@ $(document).ready(function () {
       });
     } else if ($(this).prop("checked") == false) {
       var name = $(".checkboxIsActive").attr("name");
-      console.log(name);
       var id = $(this).val();
       console.log(id);
       $.ajax({
@@ -51,7 +43,7 @@ $(document).ready(function () {
     }
   });
 
-  // ----------------------- Dropdown Admin Search --------------
+  // Dropdown Admin Search --------------
   $(".dropdown-search").hide();
   $(".filter-button").click(function () {
     $(this).siblings().toggle();
@@ -69,7 +61,6 @@ $(document).ready(function () {
           name: name,
         },
       }).done(function (response) {
-        console.log(response);
         $(".result").html(response);
         $(".ann-all").addClass("hidden");
       });
@@ -79,6 +70,7 @@ $(document).ready(function () {
     }
   });
 
+  // admin find non valid --------------
   $("#findNonValid").click(function () {
     if ($(this).prop("checked") == true) {
       $.ajax({
